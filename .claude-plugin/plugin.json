@@ -1,7 +1,7 @@
 {
   "name": "iorlas-kos",
   "description": "Knowledge OS skills: universal capture (/inbox), observation loop (/reflect), triage (/triage), and system init (/init).",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "iorlas"
   },
