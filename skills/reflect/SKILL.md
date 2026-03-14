@@ -23,6 +23,14 @@ If `$ARGUMENTS` is empty, derive from session context by reviewing:
 
 Synthesize into a specific, actionable observation. Avoid vague statements like "deployment was hard." Instead: "The deployment guideline doesn't mention that `compose.create` requires `environmentId` from the `project.create` response."
 
+**Nothing worth capturing is a valid outcome.** If the session went smoothly — no friction, no missing guidelines, no surprises — say so and stop. Do not force an observation out of a clean session. Minor speed bumps that were resolved in minutes (wrong CLI flag, typo, quick lookup) are not observations. An observation should imply a capability patch or pattern worth recording. If you can't imagine what that patch would be, there's nothing to capture.
+
+```
+No observations from this session — the work went smoothly.
+```
+
+If nothing to capture, stop here. Do not proceed to Step 2.
+
 ## Step 2: Identify Capability Hints
 
 Scan the session for references to capability guidelines or research IDs (e.g., R036 for deployment platform, R020 for MCP patterns). These are hints — best guesses, not authoritative. Leave empty if unclear.
