@@ -23,7 +23,7 @@ Create `~/Documents/Knowledge/Inbox/I{NNNN}-{slug}.md`:
 ```markdown
 ---
 kind: inbox
-subtype: {idea|task|note|report}
+subtype: {idea|task|note|report|reminder}
 id: I{NNNN}
 name: "{Item Title}"
 status: new
@@ -47,12 +47,27 @@ Source: {if applicable — link, video, person}
 - Always include: kind, subtype, id, status, created, context, project, source
 - Always include `name` — same as the `# Title` heading
 - Include `mentions` only if names found; omit if none
+- Include `due_at` only for `subtype: reminder` — ISO format `YYYY-MM-DDTHH:MM`
 
 **Subtype detection:**
 - `idea` — concepts, inspirations, hypotheses, "what if" thoughts
 - `task` — actionable items, TODOs, things someone needs to do
 - `note` — information, observations, references, facts worth recording
 - `report` — summaries, status updates, findings, analysis results
+- `reminder` — time-triggered notifications ("remind me in 30 mins", "this evening notify me", "by tomorrow 8am")
+
+**Reminder handling:**
+When input contains a time expression (relative like "in 30 mins", "tonight", "tomorrow morning" or absolute like "at 19:00", "by 08:00"), detect as `subtype: reminder` and add `due_at:` field in ISO format (`YYYY-MM-DDTHH:MM`). Convert relative times using current time. Fuzzy mappings: "this evening" → 19:00, "tonight" → 21:00, "tomorrow morning" → 09:00.
+
+**After creating the inbox file, create a native macOS Reminder:**
+```bash
+osascript -e 'set d to (current date) + {N} * minutes' -e 'tell application "Reminders" to make new reminder in list "Reminders" with properties {name:"{name}", due date:d, body:"Knowledge OS: {inbox_id}"}'
+```
+Convert the user's time expression to minutes from now. Examples: "in 30 mins" → 30, "in 2 hours" → 120, "this evening" → minutes until 19:00, "tonight" → minutes until 21:00, "tomorrow morning" → minutes until next 09:00.
+
+This pushes the notification to Reminders.app which syncs to iPhone/Watch/iPad. No background job needed — the reminder is created at capture time.
+
+**Decision: create inbox file?** For ephemeral reminders ("turn off oven", "take meds") — skip the inbox file, just create the Reminders.app entry. For meaningful reminders ("remind me to write to Alex about the proposal") — create both the inbox file and the Reminders.app entry. Use judgment: if the content has zero knowledge value after firing, skip the file.
 
 ## Project Context
 
