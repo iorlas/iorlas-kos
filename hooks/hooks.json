@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Kay (K) is the knowledge base at ~/Documents/Knowledge.\\nBefore creating any K entity, read ~/Documents/Knowledge/meta/ontology/{type}/readme.md first.\\nBefore creating any K research or project, search QMD (vec) for similar existing ones using the proposed name. If score > 0.5, show the match and ask whether to contribute to the existing entity or create new with a differentiated title.\"}}'",
+            "async": false
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "iorlas-kos",
-  "description": "Knowledge OS skills: universal capture (/inbox), observation loop (/reflect), triage (/triage), and system init (/init).",
-  "version": "1.1.0",
+  "description": "Kay (K) knowledge base skills: universal capture (/inbox), observation loop (/reflect), triage (/triage), consolidation (/consolidate), and system init (/init).",
+  "version": "1.2.0",
   "author": {
     "name": "iorlas"
   },

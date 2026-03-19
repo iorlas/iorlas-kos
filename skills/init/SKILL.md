@@ -1,9 +1,9 @@
 ---
 name: init
-description: "Initializes the Knowledge OS: creates folder structure, sets up QMD semantic search, verifies MCP. Run once before using /inbox or /triage. Use when the user says 'set up knowledge', 'init knowledge', or when /inbox reports missing folders."
+description: "Initializes Kay (K) knowledge base: creates folder structure, sets up QMD semantic search, verifies MCP. Run once before using /inbox or /triage. Use when the user says 'set up kay', 'init kay', 'init k', or when /inbox reports missing folders."
 ---
 
-# Knowledge OS — Init
+# Kay — Init
 
 Set up the personal knowledge base infrastructure. Idempotent — safe to run multiple times.
 
@@ -24,7 +24,8 @@ Create these directories if they don't exist:
 ├── References/
 ├── Calls/
 │   └── Assets/
-└── Assets/
+├── Assets/
+└── Claude/          ← Claude Code native memory (auto-managed)
 ```
 
 ### 2. Set up QMD semantic search
@@ -46,7 +47,28 @@ If collection exists but new files need embedding:
 npx @tobilu/qmd embed
 ```
 
-### 3. Verify QMD MCP server
+### 3. Configure Claude Code auto-memory directory
+
+Redirect Claude Code's native memory into Kay so it's git-tracked and durable.
+
+Read `~/.claude/settings.json` and check if `autoMemoryDirectory` is set to `~/Documents/Knowledge/Claude`:
+
+If missing or different, tell the user:
+```
+Run this in your terminal:
+  Open ~/.claude/settings.json and add:
+  "autoMemoryDirectory": "~/Documents/Knowledge/Claude"
+Then restart Claude Code.
+```
+
+Cannot modify settings.json from inside Claude Code — the user must do it manually or via `claude config set`.
+
+Create the directory if it doesn't exist:
+```bash
+mkdir -p ~/Documents/Knowledge/Claude
+```
+
+### 4. Verify QMD MCP server
 
 Check if `qmd` MCP server is registered:
 ```bash
@@ -60,12 +82,13 @@ Run this in your terminal:
 Then restart Claude Code.
 ```
 
-### 4. Report status
+### 5. Report status
 
 Show a summary:
 ```
-Knowledge OS Status:
-  Folders:  ✓ ~/Documents/Knowledge/ (N subdirectories)
-  QMD:      ✓ collection 'knowledge' (N files indexed, N embedded)
-  MCP:      ✓ qmd server registered  |  ✗ run 'claude mcp add ...' (see above)
+Kay Status:
+  Folders:    ✓ ~/Documents/Knowledge/ (N subdirectories)
+  Claude Mem: ✓ autoMemoryDirectory → ~/Documents/Knowledge/Claude/  |  ✗ set manually (see above)
+  QMD:        ✓ collection 'knowledge' (N files indexed, N embedded)
+  MCP:        ✓ qmd server registered  |  ✗ run 'claude mcp add ...' (see above)
 ```

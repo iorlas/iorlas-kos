@@ -61,7 +61,7 @@ When input contains a time expression (relative like "in 30 mins", "tonight", "t
 
 **After creating the inbox file, create a native macOS Reminder:**
 ```bash
-osascript -e 'set d to (current date) + {N} * minutes' -e 'tell application "Reminders" to make new reminder in list "Reminders" with properties {name:"{name}", due date:d, body:"Knowledge OS: {inbox_id}"}'
+osascript -e 'set d to (current date) + {N} * minutes' -e 'tell application "Reminders" to make new reminder in list "Reminders" with properties {name:"{name}", due date:d, body:"Kay: {inbox_id}"}'
 ```
 Convert the user's time expression to minutes from now. Examples: "in 30 mins" → 30, "in 2 hours" → 120, "this evening" → minutes until 19:00, "tonight" → minutes until 21:00, "tomorrow morning" → minutes until next 09:00.
 

@@ -1,11 +1,11 @@
 ---
 name: reflect
-description: "Captures an observation about what broke, was missing, or emerged during a session. Writes to Knowledge OS Inbox with optional capability hints. Use when completing a task, hitting friction, or when the user says 'reflect', 'observe', or 'capture lesson'."
+description: "Captures an observation about what broke, was missing, or emerged during a session. Writes to Kay (K) Inbox with optional capability hints. Use when completing a task, hitting friction, or when the user says 'reflect', 'observe', or 'capture lesson'."
 ---
 
 # Reflect — Capture an Observation
 
-You capture what went wrong, what was missing, or what insight emerged during the current session. Observations land in the Knowledge OS Inbox for later triage into capability patches or personal patterns.
+You capture what went wrong, what was missing, or what insight emerged during the current session. Observations land in the Kay Inbox for later triage into capability patches or personal patterns.
 
 **This is NOT a retrospective or interactive session.** Derive the observation, write the file, confirm. Done.
 
