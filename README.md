@@ -1,6 +1,6 @@
-# iorlas-kos
+# iorlas-kay
 
-Knowledge OS skills for Claude Code. Capture thoughts, observe capability gaps, and triage everything into structured knowledge.
+Kay (K) — personal knowledge base skills for Claude Code. Capture thoughts, observe capability gaps, and triage everything into structured knowledge.
 
 Replaces `iorlas-inbox` and `iorlas-learn`.
 
@@ -18,14 +18,18 @@ Capture what broke, what was missing, or what you learned during a session. Obse
 
 Process new inbox items: resolve mentions, link entities, update status. For observations: assess root cause, route to capability patches or personal patterns.
 
-### `/init` — Knowledge OS Init
+### `/consolidate` — Discover, Propose, Merge
+
+Find scattered entities that belong together and consolidate them into living guides.
+
+### `/init` — Kay Init
 
 Set up folder structure, QMD semantic search, and MCP server. Run once before using other skills.
 
 ## Install
 
 ```bash
-claude plugin add ~/Projects/iorlas-kos
+claude plugin add ~/Workspaces/iorlas-kay
 ```
 
 ## License

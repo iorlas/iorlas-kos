@@ -1,12 +1,12 @@
 {
-  "name": "iorlas-kos",
+  "name": "iorlas-kay",
   "description": "Kay (K) knowledge base skills: universal capture (/inbox), observation loop (/reflect), triage (/triage), consolidation (/consolidate), and system init (/init).",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "iorlas"
   },
-  "homepage": "https://github.com/iorlas/iorlas-kos",
-  "repository": "https://github.com/iorlas/iorlas-kos",
+  "homepage": "https://github.com/iorlas/iorlas-kay",
+  "repository": "https://github.com/iorlas/iorlas-kay",
   "license": "MIT",
   "keywords": ["knowledge-os", "inbox", "capture", "observations", "triage", "capability-feedback", "pkm"]
 }
