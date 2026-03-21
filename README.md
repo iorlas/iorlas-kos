@@ -28,9 +28,22 @@ Set up folder structure, QMD semantic search, and MCP server. Run once before us
 
 ## Install
 
+Add to your marketplace or install via `--plugin-dir`:
+
 ```bash
-claude plugin add ~/Workspaces/iorlas-kay
+claude --plugin-dir /path/to/iorlas-kay
 ```
+
+## Development
+
+Clone and load from your local copy:
+
+```bash
+git clone https://github.com/iorlas/iorlas-kay.git
+claude --plugin-dir ./iorlas-kay
+```
+
+Edit skills in `skills/`, then run `/reload-plugins` inside Claude Code to pick up changes. No restart needed.
 
 ## License
 
