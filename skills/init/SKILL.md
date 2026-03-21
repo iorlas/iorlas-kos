@@ -82,7 +82,36 @@ If collection exists but new files need embedding:
 npx @tobilu/qmd embed
 ```
 
-### 5. Configure Claude Code auto-memory directory
+### 5. Migrate existing Claude Code memory
+
+Check for existing auto-memory files in the default Claude Code locations:
+
+```bash
+find ~/.claude/projects -type d -name "memory" 2>/dev/null
+```
+
+For each memory directory found, list its contents. If files exist:
+
+1. Show the user what was found:
+```
+Found existing Claude Code memory:
+  ~/.claude/projects/-Users-you-Projects-foo/memory/
+    user_preferences.md
+    project_context.md
+  ~/.claude/projects/-Users-you-Documents-Knowledge/memory/
+    MEMORY.md
+    feedback_testing.md
+```
+
+2. Ask: "Migrate these to Kay (~/Documents/Knowledge/Agents/Claude/)? Files will be **copied** (originals kept as backup)."
+
+3. If yes, copy all `.md` files from each memory directory into `~/Documents/Knowledge/Agents/Claude/`. If filenames collide across projects, prefix with the project name (e.g., `foo--user_preferences.md`).
+
+4. After migration, show what was copied and remind the user that originals are still in `~/.claude/projects/` if they want to clean up later.
+
+If no existing memory files found, skip silently.
+
+### 6. Configure Claude Code auto-memory directory
 
 Redirect Claude Code's native memory into Kay so it's git-tracked and durable.
 
@@ -97,7 +126,7 @@ mkdir -p ~/Documents/Knowledge/Agents/Claude
 
 Tell the user to restart Claude Code for the change to take effect.
 
-### 6. Verify MCP servers
+### 7. Verify MCP servers
 
 For each dependency that has an `mcp` entry in `dependencies.json`, check if the MCP server is registered:
 
@@ -120,7 +149,7 @@ If missing, add it directly to `~/Documents/Knowledge/.mcp.json`. Read the file,
 
 Merge with any existing servers in the file. Tell the user to restart Claude Code for the new MCP server to load.
 
-### 7. Report status
+### 8. Report status
 
 Show a summary:
 ```
