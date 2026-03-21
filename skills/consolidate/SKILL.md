@@ -1,5 +1,5 @@
 ---
-name: consolidate
+name: kay-consolidate
 description: "Discovers clusters of related Kay entities, proposes merges, and executes consolidation. Use when the user says 'consolidate', 'find clusters', 'merge researches', or during periodic knowledge maintenance."
 ---
 

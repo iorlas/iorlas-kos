@@ -4,27 +4,40 @@ Kay (K) — personal knowledge base skills for Claude Code. Capture thoughts, ob
 
 Replaces `iorlas-inbox` and `iorlas-learn`.
 
+## Quick Start
+
+```bash
+# 1. Add marketplace
+claude plugin marketplace add https://github.com/iorlas/iorlas-marketplace.git
+
+# 2. Install Kay
+claude plugin install iorlas-kay@iorlas-marketplace
+
+# 3. Start Claude Code and run init
+/kay-init
+```
+
 ## Skills
 
-### `/inbox` — Universal Capture
+### `/kay-init` — Setup & Dependencies
+
+Detects your OS, checks/installs dependencies, creates the Knowledge folder, configures QMD, MCP, and Obsidian. Run once to get started, safe to re-run anytime.
+
+### `/kay-inbox` — Universal Capture
 
 Dump thoughts, tasks, links, voice transcripts. They become structured inbox files with auto-detected types and project context.
 
-### `/reflect` — Observation Capture
+### `/kay-reflect` — Observation Capture
 
 Capture what broke, what was missing, or what you learned during a session. Observations land in the Inbox tagged with capability hints for structured triage.
 
-### `/triage` — Inbox Triage
+### `/kay-triage` — Inbox Triage
 
 Process new inbox items: resolve mentions, link entities, update status. For observations: assess root cause, route to capability patches or personal patterns.
 
-### `/consolidate` — Discover, Propose, Merge
+### `/kay-consolidate` — Discover, Propose, Merge
 
 Find scattered entities that belong together and consolidate them into living guides.
-
-### `/init` — Kay Init
-
-Set up folder structure, QMD semantic search, and MCP server. Run once before using other skills.
 
 ## Install
 

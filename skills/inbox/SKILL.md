@@ -1,5 +1,5 @@
 ---
-name: inbox
+name: kay-inbox
 description: "Captures ideas, thoughts, tasks, voice dumps, links, or notes into structured inbox files in ~/Documents/Knowledge/Inbox/. Use when the user says 'capture this', 'save this thought', 'inbox', or dumps raw text/voice transcript to process."
 ---
 

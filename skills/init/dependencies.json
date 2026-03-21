@@ -1,0 +1,46 @@
+{
+  "dependencies": [
+    {
+      "name": "node",
+      "description": "Node.js runtime — required for QMD and npx",
+      "check": "node --version",
+      "required": true,
+      "install": {
+        "darwin": "brew install node",
+        "linux-apt": "sudo apt install nodejs npm",
+        "linux-dnf": "sudo dnf install nodejs npm",
+        "manual": "https://nodejs.org/en/download"
+      }
+    },
+    {
+      "name": "qmd",
+      "description": "Semantic search over markdown files (embedding + vector search)",
+      "check": "npx @tobilu/qmd --version",
+      "required": true,
+      "install": {
+        "all": "npm install -g @tobilu/qmd"
+      },
+      "setup": {
+        "collection": "npx @tobilu/qmd collection add ~/Documents/Knowledge --name knowledge",
+        "context": "npx @tobilu/qmd context add qmd://knowledge \"Personal knowledge base: inbox items (ideas, tasks, notes, reports, processes), projects, people, companies, meeting notes\"",
+        "embed": "npx @tobilu/qmd embed"
+      },
+      "mcp": {
+        "name": "qmd",
+        "command": "claude mcp add --scope user qmd -- npx @tobilu/qmd mcp"
+      }
+    },
+    {
+      "name": "gh",
+      "description": "GitHub CLI — used for repo operations and PR workflows",
+      "check": "gh --version",
+      "required": false,
+      "install": {
+        "darwin": "brew install gh",
+        "linux-apt": "sudo apt install gh",
+        "linux-dnf": "sudo dnf install gh",
+        "manual": "https://cli.github.com/"
+      }
+    }
+  ]
+}

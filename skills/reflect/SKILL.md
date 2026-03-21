@@ -1,5 +1,5 @@
 ---
-name: reflect
+name: kay-reflect
 description: "Captures an observation about what broke, was missing, or emerged during a session. Writes to Kay (K) Inbox with optional capability hints. Use when completing a task, hitting friction, or when the user says 'reflect', 'observe', or 'capture lesson'."
 ---
 
