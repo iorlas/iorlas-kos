@@ -1,5 +1,5 @@
 ---
-name: kay-triage
+name: triage
 description: "Processes inbox items: reviews new captures, resolves mentions to entities, links projects, updates status. Handles observations with capability routing. Use when the user says 'triage inbox', 'process inbox', or 'review captures'."
 ---
 

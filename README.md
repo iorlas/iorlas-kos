@@ -17,25 +17,27 @@ claude plugin install iorlas-kay@iorlas-marketplace
 /kay-init
 ```
 
+`/kay-init` walks you through everything: dependencies, folder structure, QMD, MCP, Obsidian.
+
 ## Skills
 
 ### `/kay-init` — Setup & Dependencies
 
 Detects your OS, checks/installs dependencies, creates the Knowledge folder, configures QMD, MCP, and Obsidian. Run once to get started, safe to re-run anytime.
 
-### `/kay-inbox` — Universal Capture
+### `/inbox` — Universal Capture
 
-Dump thoughts, tasks, links, voice transcripts. They become structured inbox files with auto-detected types and project context.
+Dump thoughts, tasks, links, voice transcripts. They become structured inbox files with auto-detected types and project context. Works from any directory — just say "inbox this" or "capture this".
 
-### `/kay-reflect` — Observation Capture
+### `/reflect` — Observation Capture
 
 Capture what broke, what was missing, or what you learned during a session. Observations land in the Inbox tagged with capability hints for structured triage.
 
-### `/kay-triage` — Inbox Triage
+### `/triage` — Inbox Triage
 
 Process new inbox items: resolve mentions, link entities, update status. For observations: assess root cause, route to capability patches or personal patterns.
 
-### `/kay-consolidate` — Discover, Propose, Merge
+### `/consolidate` — Discover, Propose, Merge
 
 Find scattered entities that belong together and consolidate them into living guides.
 

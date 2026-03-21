@@ -1,6 +1,6 @@
 ---
 name: kay-init
-description: "Initializes Kay (K) knowledge base: checks dependencies, creates folder structure, sets up QMD semantic search, verifies MCP. Run once before using /kay-inbox or /kay-triage. Use when the user says 'set up kay', 'init kay', 'init k', or when /kay-inbox reports missing folders."
+description: "Initializes Kay (K) knowledge base: checks dependencies, creates folder structure, sets up QMD semantic search, verifies MCP. Run once before using /inbox or /triage. Use when the user says 'set up kay', 'init kay', 'init k', or when /inbox reports missing folders."
 ---
 
 # Kay — Init
