@@ -9,7 +9,21 @@
         "darwin": "brew install node",
         "linux-apt": "sudo apt install nodejs npm",
         "linux-dnf": "sudo dnf install nodejs npm",
+        "windows": "winget install OpenJS.NodeJS",
         "manual": "https://nodejs.org/en/download"
+      }
+    },
+    {
+      "name": "python3",
+      "description": "Python 3 — required for scheduler and background jobs",
+      "check": "python3 --version",
+      "required": true,
+      "install": {
+        "darwin": "brew install python3",
+        "linux-apt": "sudo apt install python3 python3-venv",
+        "linux-dnf": "sudo dnf install python3",
+        "windows": "winget install Python.Python.3.12",
+        "manual": "https://www.python.org/downloads/"
       }
     },
     {
@@ -31,6 +45,32 @@
       }
     },
     {
+      "name": "jq",
+      "description": "JSON processor — required for status line",
+      "check": "jq --version",
+      "required": true,
+      "install": {
+        "darwin": "brew install jq",
+        "linux-apt": "sudo apt install jq",
+        "linux-dnf": "sudo dnf install jq",
+        "windows": "winget install jqlang.jq",
+        "manual": "https://jqlang.github.io/jq/download/"
+      }
+    },
+    {
+      "name": "git",
+      "description": "Version control — Kay repo is git-tracked",
+      "check": "git --version",
+      "required": true,
+      "install": {
+        "darwin": "xcode-select --install",
+        "linux-apt": "sudo apt install git",
+        "linux-dnf": "sudo dnf install git",
+        "windows": "winget install Git.Git",
+        "manual": "https://git-scm.com/downloads"
+      }
+    },
+    {
       "name": "gh",
       "description": "GitHub CLI — used for repo operations and PR workflows",
       "check": "gh --version",
@@ -39,6 +79,7 @@
         "darwin": "brew install gh",
         "linux-apt": "sudo apt install gh",
         "linux-dnf": "sudo dnf install gh",
+        "windows": "winget install GitHub.cli",
         "manual": "https://cli.github.com/"
       }
     }

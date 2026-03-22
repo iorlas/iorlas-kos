@@ -1,0 +1,36 @@
+name: person
+description: Individuals relevant to projects, domains, or professional relationships — contacts, collaborators, mentors, public figures.
+folder: People
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: person
+
+status_lifecycle:
+  active:
+    - inactive
+    - archived
+  inactive:
+    - active
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  claims:
+    type: list
+    required: false
+    description: "Key facts about this person"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0, relevance to current work"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this person was referenced"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0, confidence in recorded information"

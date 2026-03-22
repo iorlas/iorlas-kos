@@ -1,0 +1,50 @@
+name: research
+description: Deep investigations with sources, analysis, and decisions. Understanding-work — exploring a domain, evaluating technologies, analyzing markets, or studying phenomena.
+folder: Researches
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: research
+
+status_lifecycle:
+  exploring:
+    - active
+    - archived
+  active:
+    - paused
+    - completed
+    - archived
+  paused:
+    - active
+    - archived
+  completed:
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  workspace:
+    type: string
+    required: false
+    description: "Path or identifier of the associated workspace/repo, if any"
+  claims:
+    type: list
+    required: false
+    description: "Structured assertions about the research"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0, how relevant to current work"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this research was actively used"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0, confidence in current findings"
+  decay_score:
+    type: float
+    required: false
+    description: "0.0–1.0, staleness indicator"

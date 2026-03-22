@@ -1,0 +1,43 @@
+name: project
+description: Delivery-work entities — software development, content creation, consulting engagements, and operational channels.
+folder: Projects
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: project
+
+status_lifecycle:
+  active:
+    - paused
+    - completed
+    - archived
+  paused:
+    - active
+    - archived
+  completed:
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  claims:
+    type: list
+    required: false
+    description: "Structured assertions about the project"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0, how relevant to current work"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this project was actively used"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0, confidence in current findings"
+  decay_score:
+    type: float
+    required: false
+    description: "0.0–1.0, staleness indicator"

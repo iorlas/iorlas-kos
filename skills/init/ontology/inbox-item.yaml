@@ -1,0 +1,98 @@
+name: inbox-item
+description: Captured ideas, links, notes, and raw inputs awaiting triage. High-volume, temporary.
+folder: Inbox
+file_pattern: "{slug}.md"
+inherits: base
+kind_value: inbox
+
+# Overrides from base:
+# - id pattern is I\d{4} (e.g. I0042), not universal 3-digit counter
+# - aliases and updated are not required
+# - name is not required (inbox items may not have a display name)
+
+status_lifecycle:
+  new:
+    - incubating
+    - triaged
+    - reminded
+  incubating:
+    - incubated
+    - failed
+  incubated:
+    - triaged
+  failed:
+    - triaged
+    - new
+  triaged:
+    - promoted
+    - archived
+    - deferred
+  reminded:
+    - triaged
+    - archived
+  promoted: []
+  archived: []
+  deferred: []
+
+fields:
+  id:
+    type: string
+    required: true
+    pattern: "^I\\d{4}$"
+    description: "Inbox ID in I#### format (e.g. I0042)"
+  name:
+    type: string
+    required: false
+    description: "Optional display name; inbox items often lack one at capture time"
+  aliases:
+    type: list
+    required: false
+  updated:
+    type: date
+    required: false
+  source:
+    type: string
+    required: false
+    enum: [voice, text, web, email, thought]
+    description: "Where this item came from"
+  subtype:
+    type: enum
+    values: [idea, note, task, report, observation, reminder]
+    required: false
+    description: "Classification of the captured content"
+  project:
+    type: string
+    required: false
+    description: "ID of related project, if known at capture time"
+  mentions:
+    type: list
+    required: false
+    description: "Entity IDs mentioned in the captured content"
+  linked_entities:
+    type: list
+    required: false
+    description: "Resolved entity links after triage"
+  context:
+    type: string
+    required: false
+    description: "Additional context captured with the item"
+  capability:
+    type: list
+    required: false
+    description: "Capability hints — free-form strings identifying which capabilities this item relates to"
+  due_at:
+    type: string
+    required: false
+    description: "ISO datetime (YYYY-MM-DDTHH:MM) when this reminder should fire"
+  incubation_started:
+    type: string
+    required: false
+    description: "ISO timestamp when incubation job started; used for stale lock recovery"
+  incubation_retries:
+    type: integer
+    required: false
+    description: "Number of failed incubation attempts; >= 3 triggers failed status"
+  incubated_at:
+    type: string
+    required: false
+    description: "ISO timestamp when incubation completed successfully"

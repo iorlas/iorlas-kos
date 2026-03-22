@@ -1,0 +1,40 @@
+name: reference
+description: Curated resource lists organized by domain — high-quality websites, databases, communities, and tools for a specific domain.
+folder: References
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: reference
+
+status_lifecycle:
+  active:
+    - stale
+    - archived
+  stale:
+    - active
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  tags:
+    type: list
+    required: true
+    description: "Must include at least one domain tag"
+  claims:
+    type: list
+    required: false
+    description: "Key assertions about the domain"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this hub was consulted"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0"

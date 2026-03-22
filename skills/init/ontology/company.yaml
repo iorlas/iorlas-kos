@@ -1,0 +1,36 @@
+name: company
+description: Organizations relevant to projects or professional context — employers, clients, vendors, open-source orgs.
+folder: Companies
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: company
+
+status_lifecycle:
+  active:
+    - inactive
+    - archived
+  inactive:
+    - active
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  claims:
+    type: list
+    required: false
+    description: "Key facts about this company"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0, relevance to current work"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this company was referenced"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0, confidence in recorded information"

@@ -1,0 +1,46 @@
+name: process
+description: Reusable methodologies extracted from projects — documented steps, quality gates, and decision points.
+folder: Processes
+file_pattern: "{slug}/README.md"
+inherits: base
+kind_value: process
+
+status_lifecycle:
+  draft:
+    - active
+    - archived
+  active:
+    - deprecated
+    - archived
+  deprecated:
+    - archived
+  archived: []
+
+fields:
+  updated:
+    type: date
+    required: true
+  origin:
+    type: string
+    required: false
+    description: "ID of the research or project that produced this process"
+  used_in:
+    type: list
+    required: false
+    description: "IDs of projects that use this process"
+  claims:
+    type: list
+    required: false
+    description: "Key assertions about the process"
+  relevance_score:
+    type: float
+    required: false
+    description: "0.0–1.0"
+  last_referenced:
+    type: date
+    required: false
+    description: "Last time this process was used"
+  confidence:
+    type: float
+    required: false
+    description: "0.0–1.0, confidence in the methodology"

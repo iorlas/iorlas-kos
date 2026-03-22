@@ -1,0 +1,42 @@
+name: base
+description: Shared fields inherited by all entity types
+fields:
+  kind:
+    type: string
+    required: true
+  id:
+    type: string
+    required: true
+  name:
+    type: string
+    required: true
+  aliases:
+    type: list
+    required: false
+  status:
+    type: string
+    required: true
+  created:
+    type: date
+    required: true
+  updated:
+    type: date
+    required: false
+  tags:
+    type: list
+    required: false
+  claims:
+    type: any
+    required: false
+  relevance_score:
+    type: float
+    required: false
+  last_referenced:
+    type: date
+    required: false
+  confidence:
+    type: any
+    required: false
+  decay_score:
+    type: float
+    required: false
