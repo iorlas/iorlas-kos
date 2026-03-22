@@ -2,8 +2,9 @@
 """Ideas Incubation Job — finds new inbox ideas and runs headless Claude to research them.
 
 Usage:
-    python3 skills/inbox/jobs/ideas-incubation/run.py [--verbose]
+    python3 internals/inbox/jobs/ideas-incubation/run.py [--verbose]
 """
+CADENCE = 1800  # 30 minutes
 import json
 import subprocess
 import sys

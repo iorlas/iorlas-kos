@@ -5,7 +5,7 @@ Each job gets its own thread. A slow job never blocks a fast one.
 Ctrl+C stops everything cleanly.
 
 Usage:
-    python3 ~/Documents/Knowledge/skills/core/scheduler.py
+    python3 ~/Documents/Knowledge/internals/core/scheduler.py
 """
 
 import glob
@@ -20,8 +20,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 KNOWLEDGE_PATH = Path.home() / "Documents" / "Knowledge"
-SKILLS_DIR = KNOWLEDGE_PATH / "skills"
-LOG_FILE = SKILLS_DIR / "core" / "scheduler.log"
+INTERNALS_DIR = KNOWLEDGE_PATH / "internals"
+LOG_FILE = INTERNALS_DIR / "core" / "scheduler.log"
 CHECK_INTERVAL = 60  # seconds between cadence checks
 
 
@@ -36,21 +36,21 @@ def log(msg: str):
         pass
 
 
-def get_cadence(run_sh: Path) -> int:
+def get_cadence(run_py: Path) -> int:
     try:
-        text = run_sh.read_text()
-        match = re.search(r"^CADENCE=(\d+)", text, re.MULTILINE)
+        text = run_py.read_text()
+        match = re.search(r"^CADENCE\s*=\s*(\d+)", text, re.MULTILINE)
         return int(match.group(1)) if match else 600
     except OSError:
         return 600
 
 
-def job_loop(run_sh: Path, stop_event: threading.Event):
-    job_dir = run_sh.parent
+def job_loop(run_py: Path, stop_event: threading.Event):
+    job_dir = run_py.parent
     job_name = job_dir.name
     skill_name = job_dir.parent.parent.name
     timestamp_file = job_dir / ".last-run-timestamp"
-    cadence = get_cadence(run_sh)
+    cadence = get_cadence(run_py)
 
     log(f"Job loop started: {skill_name}/{job_name} (cadence: {cadence}s)")
 
@@ -69,8 +69,7 @@ def job_loop(run_sh: Path, stop_event: threading.Event):
             log(f"Running job: {skill_name}/{job_name}")
             try:
                 result = subprocess.run(
-                    [str(run_sh)],
-                    shell=True,
+                    [sys.executable, str(run_py)],
                     cwd=str(job_dir),
                     capture_output=True,
                     text=True,
@@ -99,7 +98,7 @@ def main():
     log("=== Scheduler Start ===")
 
     # Find all jobs
-    pattern = str(SKILLS_DIR / "*" / "jobs" / "*" / "run.sh")
+    pattern = str(INTERNALS_DIR / "*" / "jobs" / "*" / "run.py")
     job_scripts = [Path(p) for p in glob.glob(pattern) if os.path.isfile(p)]
 
     if not job_scripts:
@@ -109,8 +108,8 @@ def main():
     stop_event = threading.Event()
     threads = []
 
-    for run_sh in job_scripts:
-        t = threading.Thread(target=job_loop, args=(run_sh, stop_event), daemon=True)
+    for run_py in job_scripts:
+        t = threading.Thread(target=job_loop, args=(run_py, stop_event), daemon=True)
         t.start()
         threads.append(t)
 

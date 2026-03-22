@@ -59,29 +59,29 @@ Create missing folders silently — this is non-destructive.
 ### 2.4 Infrastructure
 **Why:** Kay has a Python engine (frontmatter parsing, schema validation, entity creation) and background jobs that need to be in the Knowledge repo.
 
-Compare the `infrastructure/` directory bundled with this skill against `~/Documents/Knowledge/skills/core/`:
+Compare the `infrastructure/` directory bundled with this skill against `~/Documents/Knowledge/internals/core/`:
 
 - **First time (directory missing):** copy the entire `infrastructure/` tree:
-  - `infrastructure/engine/` → `~/Documents/Knowledge/skills/core/engine/`
-  - `infrastructure/scheduler.py` → `~/Documents/Knowledge/skills/core/scheduler.py`
-  - `infrastructure/requirements.txt` → `~/Documents/Knowledge/skills/requirements.txt`
-  - `infrastructure/jobs/decay-scoring/` → `~/Documents/Knowledge/skills/core/jobs/decay-scoring/`
-  - `infrastructure/jobs/qmd-embed/` → `~/Documents/Knowledge/skills/core/jobs/qmd-embed/`
-  - `infrastructure/jobs/ideas-incubation/` → `~/Documents/Knowledge/skills/inbox/jobs/ideas-incubation/`
-- **Exists but outdated:** diff key files (scheduler.py, engine/*.py, job run.sh scripts). If different, tell the user what changed and ask to update.
+  - `infrastructure/engine/` → `~/Documents/Knowledge/internals/core/engine/`
+  - `infrastructure/scheduler.py` → `~/Documents/Knowledge/internals/core/scheduler.py`
+  - `infrastructure/requirements.txt` → `~/Documents/Knowledge/internals/requirements.txt`
+  - `infrastructure/jobs/decay-scoring/` → `~/Documents/Knowledge/internals/core/jobs/decay-scoring/`
+  - `infrastructure/jobs/qmd-embed/` → `~/Documents/Knowledge/internals/core/jobs/qmd-embed/`
+  - `infrastructure/jobs/ideas-incubation/` → `~/Documents/Knowledge/internals/inbox/jobs/ideas-incubation/`
+- **Exists but outdated:** diff key files (scheduler.py, engine/*.py, job run.py scripts). If different, tell the user what changed and ask to update.
 - **Current:** skip.
 
-Also copy ontology schemas: `ontology/*.yaml` → corresponding `~/Documents/Knowledge/skills/*/types/` directories. And templates: `templates/` → corresponding `~/Documents/Knowledge/skills/*/templates/`.
+Also copy ontology schemas: `ontology/*.yaml` → corresponding `~/Documents/Knowledge/internals/*/types/` directories. And templates: `templates/` → corresponding `~/Documents/Knowledge/internals/*/templates/`.
 
 ### 2.5 Python environment
 **Why:** The scheduler and jobs need Python with pyyaml and filelock.
 
 Check if venv exists and has deps:
-- Unix: `~/Documents/Knowledge/skills/.venv/bin/python3 -c "import yaml; import filelock"`
-- Windows: `~/Documents/Knowledge/skills/.venv/Scripts/python.exe -c "import yaml; import filelock"`
+- Unix: `~/Documents/Knowledge/internals/.venv/bin/python3 -c "import yaml; import filelock"`
+- Windows: `~/Documents/Knowledge/internals/.venv/Scripts/python.exe -c "import yaml; import filelock"`
 
-Missing venv → create: `python3 -m venv ~/Documents/Knowledge/skills/.venv`
-Missing deps → install: `.venv/bin/pip install -r ~/Documents/Knowledge/skills/requirements.txt`
+Missing venv → create: `python3 -m venv ~/Documents/Knowledge/internals/.venv`
+Missing deps → install: `.venv/bin/pip install -r ~/Documents/Knowledge/internals/requirements.txt`
 
 ### 2.6 QMD search index
 **Why:** QMD provides semantic search over your knowledge base.
@@ -124,7 +124,7 @@ Check three things:
 
 ## Step 3: Scheduler check
 
-Check if `~/Documents/Knowledge/skills/core/scheduler.py` exists and is running: `pgrep -f "scheduler.py"`
+Check if `~/Documents/Knowledge/internals/core/scheduler.py` exists and is running: `pgrep -f "scheduler.py"`
 
 - **Running:** report as healthy
 - **Not running:** remind the user (see tips below)
@@ -150,6 +150,6 @@ All green → "Kay is healthy." Fixes applied → list them. Needs input → ask
 
 Always end with:
 > **Tips:**
-> - Scheduler: keep `python3 ~/Documents/Knowledge/skills/core/scheduler.py` running in a spare terminal tab
+> - Scheduler: keep `python3 ~/Documents/Knowledge/internals/core/scheduler.py` running in a spare terminal tab
 > - Getting started: `cd ~/Documents/Knowledge` and start a session there
 > - Add entity types: create a new `.yaml` in the plugin's `ontology/` folder and rerun `/init`

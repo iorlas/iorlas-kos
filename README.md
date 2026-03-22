@@ -29,7 +29,7 @@ Run `/init` again anytime — it detects drift and self-heals.
 **Start the scheduler** in a spare terminal tab (keeps embeddings fresh, runs decay scoring, incubates new ideas):
 
 ```bash
-python3 ~/Documents/Knowledge/skills/core/scheduler.py
+python3 ~/Documents/Knowledge/internals/core/scheduler.py
 ```
 
 **Start working** from your Knowledge folder:

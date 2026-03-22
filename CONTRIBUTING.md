@@ -2,68 +2,58 @@
 
 ## Development Setup
 
-Kay skills are Claude Code plugins. To develop locally with instant feedback:
-
-### 1. Install Kay from the marketplace
-
-```bash
-claude plugin marketplace add https://github.com/iorlas/iorlas-marketplace.git
-claude plugin install iorlas-kay@iorlas-marketplace
-```
-
-### 2. Symlink your workspace over the cached install
-
-The marketplace install clones a snapshot into `~/.claude/plugins/cache/`. Replace it with a symlink to your local clone so edits are picked up immediately:
+Clone and use `--plugin-dir` for local development:
 
 ```bash
 git clone https://github.com/iorlas/iorlas-kay.git
-CACHE_DIR=$(find ~/.claude/plugins/cache -type d -name "iorlas-kay" | head -1)
-VERSION=$(ls "$CACHE_DIR" | head -1)
-rm -rf "$CACHE_DIR/$VERSION"
-ln -s "$(pwd)/iorlas-kay" "$CACHE_DIR/$VERSION"
+claude --plugin-dir ./iorlas-kay
 ```
 
-### 3. Edit and reload
+Edits are picked up on session start. No cache, no symlinks, no stale files.
 
-Edit any file in `skills/`, `hooks/`, or `.claude-plugin/`. Then inside Claude Code:
-
-```
-/reload-plugins
-```
-
-Changes are picked up instantly. No reinstall, no restart, no push needed.
-
-### 4. When done
-
-Push your changes. Others (or your future self) can pick them up with:
+**Tip:** Add a shell alias for convenience:
 
 ```bash
-claude plugin update iorlas-kay@iorlas-marketplace
-```
+# fish
+alias c="claude --plugin-dir ~/Workspaces/iorlas-kay"
 
-This overwrites the symlink with a fresh clone from GitHub — back to "installed" mode.
+# bash/zsh
+alias c="claude --plugin-dir ~/Workspaces/iorlas-kay"
+```
 
 ## Project Structure
 
 ```
-iorlas-kay/
-  .claude-plugin/plugin.json   -- plugin metadata
-  hooks/hooks.json              -- SessionStart hook (announces Kay to every session)
-  skills/
-    init/
-      SKILL.md                  -- /kay-init: full setup wizard
-      dependencies.json         -- dependency registry (node, qmd, gh, ...)
-    inbox/SKILL.md              -- /inbox: universal capture
-    reflect/SKILL.md            -- /reflect: observation capture
-    triage/SKILL.md             -- /triage: inbox processing
-    consolidate/SKILL.md        -- /consolidate: entity merge
+skills/
+  init/
+    SKILL.md              — init skill instructions
+    dependencies.json     — required tools and install commands
+    kay-statusline.sh     — status line script (copied to ~/.claude/hooks/)
+    ontology/             — entity type schemas (YAML) — drives folder structure
+    templates/            — entity templates (copied to Knowledge repo)
+    infrastructure/       — engine, scheduler, jobs (copied to Knowledge repo)
+  inbox/SKILL.md          — capture skill
+  triage/SKILL.md         — triage skill
+  reflect/SKILL.md        — observation capture skill
+  consolidate/SKILL.md    — entity merging skill
 ```
+
+## How Init Works
+
+Init is ontology-driven. Each `.yaml` file in `ontology/` defines an entity type with a `folder` field. Init reads these and creates the corresponding directories in `~/Documents/Knowledge/`.
+
+The `infrastructure/` directory contains the Python engine, scheduler, and background jobs. Init copies these into `~/Documents/Knowledge/internals/` on first run and detects drift on subsequent runs.
+
+## Adding Entity Types
+
+1. Create a new `.yaml` in `skills/init/ontology/`
+2. Optionally add a template in `skills/init/templates/`
+3. Run `/init` — the new folder appears
 
 ## Adding a Dependency
 
-Add an entry to `skills/init/dependencies.json`. The `/kay-init` skill reads this file and checks/installs each dependency with OS-specific commands.
+Add an entry to `skills/init/dependencies.json`. Init reads this file and checks/installs each dependency with OS-specific commands.
 
-## Skill Naming
+## Testing
 
-- Most skills use short names: `inbox`, `reflect`, `triage`, `consolidate`
-- Only `kay-init` is prefixed — to avoid clashing with the built-in `/init` command
+Run `/init` from a clean state to verify the full onboarding flow. The skill is idempotent — rerunning should report all healthy if nothing changed.
