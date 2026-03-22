@@ -1,10 +1,8 @@
-# iorlas-kay
+# Kay
 
-Kay (K) — personal knowledge base skills for Claude Code. Capture thoughts, observe capability gaps, and triage everything into structured knowledge.
+Personal knowledge base for Claude Code. One plugin, one command, everything set up.
 
-Replaces `iorlas-inbox` and `iorlas-learn`.
-
-## Quick Start
+## Get Started
 
 ```bash
 # 1. Add marketplace
@@ -13,52 +11,81 @@ claude plugin marketplace add https://github.com/iorlas/iorlas-marketplace.git
 # 2. Install Kay
 claude plugin install iorlas-kay@iorlas-marketplace
 
-# 3. Start Claude Code and run init
-/kay-init
+# 3. Run init (this sets up everything)
+/init
 ```
 
-`/kay-init` walks you through everything: dependencies, folder structure, QMD, MCP, Obsidian.
+That's it. Init will:
+- Check dependencies (Node.js, Python, QMD, jq, git)
+- Create your Knowledge folder with ontology-driven structure
+- Install the entity engine, scheduler, and background jobs
+- Configure semantic search (QMD), memory, MCP, and a status line
+- Tell you what to do next
+
+Run `/init` again anytime — it detects drift and self-heals.
+
+## After Setup
+
+**Start the scheduler** in a spare terminal tab (keeps embeddings fresh, runs decay scoring, incubates new ideas):
+
+```bash
+python3 ~/Documents/Knowledge/skills/core/scheduler.py
+```
+
+**Start working** from your Knowledge folder:
+
+```bash
+cd ~/Documents/Knowledge
+claude
+```
 
 ## Skills
 
-### `/kay-init` — Setup & Dependencies
+| Command | What it does |
+|---------|-------------|
+| `/init` | Set up from scratch or health-check an existing install |
+| `/inbox` | Capture thoughts, tasks, links, voice dumps — from any directory |
+| `/reflect` | Record what broke or what you learned during a session |
+| `/triage` | Process inbox items: resolve mentions, link entities, route observations |
+| `/consolidate` | Find scattered entities that belong together and merge them |
 
-Detects your OS, checks/installs dependencies, creates the Knowledge folder, configures QMD, MCP, and Obsidian. Run once to get started, safe to re-run anytime.
+## How It Works
 
-### `/inbox` — Universal Capture
+Kay is **ontology-driven**. Entity schemas (YAML files in the plugin) define your knowledge structure:
 
-Dump thoughts, tasks, links, voice transcripts. They become structured inbox files with auto-detected types and project context. Works from any directory — just say "inbox this" or "capture this".
+- **Inbox** — captured ideas, links, notes awaiting triage
+- **Projects** — delivery work, consulting, content creation
+- **People** — contacts, collaborators, public figures
+- **Companies** — organizations relevant to your work
+- **Researches** — deep investigations with sources and analysis
+- **Processes** — reusable methodologies and workflows
+- **References** — curated resource lists by domain
 
-### `/reflect` — Observation Capture
+Add a new `.yaml` schema to the plugin's `ontology/` folder, rerun `/init`, and the new entity type appears.
 
-Capture what broke, what was missing, or what you learned during a session. Observations land in the Inbox tagged with capability hints for structured triage.
+## Extending
 
-### `/triage` — Inbox Triage
+Want a new entity type? Create a schema:
 
-Process new inbox items: resolve mentions, link entities, update status. For observations: assess root cause, route to capability patches or personal patterns.
-
-### `/consolidate` — Discover, Propose, Merge
-
-Find scattered entities that belong together and consolidate them into living guides.
-
-## Install
-
-Add to your marketplace or install via `--plugin-dir`:
-
-```bash
-claude --plugin-dir /path/to/iorlas-kay
+```yaml
+# ontology/book.yaml
+name: book
+description: Books you've read or want to read
+folder: Books
+file_pattern: "{slug}/README.md"
+inherits: base
 ```
 
-## Development
+Run `/init` — Kay creates the `Books/` folder and you're ready to go.
 
-Clone and load from your local copy:
+## Development
 
 ```bash
 git clone https://github.com/iorlas/iorlas-kay.git
 claude --plugin-dir ./iorlas-kay
 ```
 
-Edit skills in `skills/`, then run `/reload-plugins` inside Claude Code to pick up changes. No restart needed.
+Use `--plugin-dir` for local development. Edits are picked up on session start — no cache issues.
 
 ## License
 
