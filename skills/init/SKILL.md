@@ -150,6 +150,6 @@ All green → "Kay is healthy." Fixes applied → list them. Needs input → ask
 
 Always end with:
 > **Tips:**
-> - Scheduler: keep `python3 ~/Documents/Knowledge/internals/core/scheduler.py` running in a spare terminal tab
+> - Scheduler: keep `~/Documents/Knowledge/internals/.venv/bin/python3 ~/Documents/Knowledge/internals/core/scheduler.py` running in a spare terminal tab
 > - Getting started: `cd ~/Documents/Knowledge` and start a session there
 > - Add entity types: create a new `.yaml` in the plugin's `ontology/` folder and rerun `/init`
