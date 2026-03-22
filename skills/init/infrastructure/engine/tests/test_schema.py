@@ -2,7 +2,7 @@ from pathlib import Path
 from skills.core.engine.schema import load_schemas, build_pydantic_model, resolve_schema_for_path
 
 KB_DIR = Path(__file__).resolve().parents[4]
-SKILLS_DIR = KB_DIR / "skills"
+SKILLS_DIR = KB_DIR / "internals"
 
 
 def test_load_schemas_finds_all_types():

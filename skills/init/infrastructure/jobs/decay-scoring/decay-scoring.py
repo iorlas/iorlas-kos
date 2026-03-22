@@ -12,7 +12,7 @@ from datetime import datetime, date
 from pathlib import Path
 
 KNOWLEDGE_DIR = Path.home() / "Documents" / "Knowledge"
-SKILLS_DIR = KNOWLEDGE_DIR / "skills"
+SKILLS_DIR = KNOWLEDGE_DIR / "internals"
 TODAY = date.today()
 VERBOSE = "--verbose" in sys.argv
 

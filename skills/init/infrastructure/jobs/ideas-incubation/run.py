@@ -26,8 +26,8 @@ DISALLOWED_TOOLS = "AskUserQuestion"
 # ─── Paths ───────────────────────────────────────────────────────────────────
 KNOWLEDGE_DIR = Path.home() / "Documents" / "Knowledge"
 INBOX_DIR = KNOWLEDGE_DIR / "Inbox"
-SKILLS_DIR = KNOWLEDGE_DIR / "skills"
-JOB_DIR = SKILLS_DIR / "inbox" / "jobs" / "ideas-incubation"
+INTERNALS_DIR = KNOWLEDGE_DIR / "internals"
+JOB_DIR = INTERNALS_DIR / "inbox" / "jobs" / "ideas-incubation"
 PROMPT_FILE = JOB_DIR / "prompt.md"
 LOG_FILE = JOB_DIR / "last-run.log"
 

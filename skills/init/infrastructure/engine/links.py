@@ -14,7 +14,7 @@ def check_links(kb_dir: Path) -> list[Finding]:
 
     # Collect all wikilinks across the KB
     link_sources: dict[str, list[Path]] = {}
-    skip_dirs = {"_meta", "skills", ".claude", ".git", "Assets"}
+    skip_dirs = {"_meta", "internals", ".claude", ".git", "Assets"}
 
     for md in sorted(kb_dir.rglob("*.md")):
         rel = md.relative_to(kb_dir)

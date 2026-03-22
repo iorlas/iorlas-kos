@@ -25,7 +25,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     from skills.core.engine.validate import validate_file, Finding
 
     kb_dir = get_kb_dir()
-    skills_dir = kb_dir / "skills"
+    skills_dir = kb_dir / "internals"
 
     if not skills_dir.exists():
         print("ERROR: skills/ directory not found — cannot load schemas", file=sys.stderr)
@@ -101,7 +101,7 @@ def cmd_transition(args):
     from skills.core.engine.transition import transition_file
 
     kb_dir = get_kb_dir()
-    skills_dir = kb_dir / "skills"
+    skills_dir = kb_dir / "internals"
     path = Path(args.path)
     if not path.is_absolute():
         path = (kb_dir / path).resolve()
@@ -119,7 +119,7 @@ def cmd_create(args):
     from skills.core.engine.create import create_entity
 
     kb_dir = get_kb_dir()
-    skills_dir = kb_dir / "skills"
+    skills_dir = kb_dir / "internals"
 
     try:
         path = create_entity(args.type, args.name, kb_dir, skills_dir)

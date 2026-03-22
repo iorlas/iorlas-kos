@@ -3,7 +3,7 @@ from skills.core.engine.transition import check_transition
 from skills.core.engine.schema import load_schemas
 
 KB_DIR = Path(__file__).resolve().parents[4]
-SKILLS_DIR = KB_DIR / "skills"
+SKILLS_DIR = KB_DIR / "internals"
 
 
 def test_valid_project_transition():

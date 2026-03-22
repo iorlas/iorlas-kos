@@ -5,7 +5,7 @@ from skills.core.engine.validate import validate_file, Finding
 from skills.core.engine.schema import load_schemas, build_pydantic_model
 
 KB_DIR = Path(__file__).resolve().parents[4]
-SKILLS_DIR = KB_DIR / "skills"
+SKILLS_DIR = KB_DIR / "internals"
 
 
 def _write_temp(content: str, dir_name: str = "Projects", file_name: str = "README.md") -> Path:
