@@ -148,8 +148,15 @@ Kay Status:
 
 All green → "Kay is healthy." Fixes applied → list them. Needs input → ask.
 
-Always end with:
-> **Tips:**
-> - Scheduler: keep `~/Documents/Knowledge/internals/.venv/bin/python3 ~/Documents/Knowledge/internals/core/scheduler.py` running in a spare terminal tab
-> - Getting started: `cd ~/Documents/Knowledge` and start a session there
-> - Add entity types: create a new `.yaml` in the plugin's `ontology/` folder and rerun `/init`
+Always end with these tips. Show the scheduler command exactly as written — do not shorten or paraphrase it:
+
+```
+Tips:
+  Scheduler — keep this running in a spare terminal tab:
+    ~/Documents/Knowledge/internals/.venv/bin/python3 ~/Documents/Knowledge/internals/core/scheduler.py
+
+  Getting started:
+    cd ~/Documents/Knowledge
+
+  Extend Kay — add a .yaml to the plugin's ontology/ folder and rerun /init
+```
