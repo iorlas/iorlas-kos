@@ -24,6 +24,9 @@ INTERNALS_DIR = KNOWLEDGE_PATH / "internals"
 LOG_FILE = INTERNALS_DIR / "core" / "scheduler.log"
 CHECK_INTERVAL = 60  # seconds between cadence checks
 
+# Engine path — so jobs can `from frontmatter import ...`
+ENGINE_DIR = str(INTERNALS_DIR / "core" / "engine")
+
 
 def log(msg: str):
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -68,9 +71,14 @@ def job_loop(run_py: Path, stop_event: threading.Event):
         if elapsed >= cadence:
             log(f"Running job: {skill_name}/{job_name}")
             try:
+                env = os.environ.copy()
+                # Add engine to PYTHONPATH so jobs can import frontmatter, schema, etc.
+                pythonpath = env.get("PYTHONPATH", "")
+                env["PYTHONPATH"] = ENGINE_DIR + (os.pathsep + pythonpath if pythonpath else "")
                 result = subprocess.run(
                     [sys.executable, str(run_py)],
                     cwd=str(job_dir),
+                    env=env,
                     capture_output=True,
                     text=True,
                     timeout=3600,
