@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Kay (K) is the personal knowledge base at ~/Documents/Knowledge.\\n\\nWhen the user says \\\"inbox\\\", \\\"capture\\\", \\\"save this thought\\\", or \\\"put this in K\\\" — use /inbox to write to Kay, regardless of current working directory.\\nWhen the user says \\\"reflect\\\" or \\\"capture lesson\\\" — use /reflect.\\nWhen the user says \\\"triage\\\" — use /triage.\\n\\nK, Kay, and Knowledge all refer to ~/Documents/Knowledge.\\nIf you need to understand Kay structure, read ~/Documents/Knowledge/CLAUDE.md.\\nBefore creating any Kay entity (research, project, person, etc.), search QMD (vec) for similar existing ones. If score > 0.5, show the match and ask whether to contribute to the existing entity or create new.\"}}'",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\"",
             "async": false
           }
         ]

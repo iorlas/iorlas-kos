@@ -1,11 +1,11 @@
 ---
 name: triage
-description: "Processes inbox items: reviews new captures, resolves mentions to entities, links projects, updates status. Handles observations with capability routing. Use when the user says 'triage inbox', 'process inbox', or 'review captures'."
+description: "Processes inbox items: reviews new captures, resolves mentions to entities, links projects, updates status. Handles observations with skill and capability routing. Use when the user says 'triage inbox', 'process inbox', or 'review captures'."
 ---
 
 # Inbox Triage
 
-Process `status: new` items in `~/Documents/Knowledge/Inbox/`. For each item: review, resolve mentions, link entities, update status. Observations get special handling — routed to capability patches or personal patterns.
+Process `status: new` items in `~/Documents/Knowledge/Inbox/`. For each item: review, resolve mentions, link entities, update status. Observations get special handling — routed to K skill improvements, capability patches, or personal patterns.
 
 Input: $ARGUMENTS
 
@@ -62,12 +62,15 @@ Read the file and:
 **a. Show the observation** — display title + "What happened" section to the user.
 
 **b. Assess root cause** — the `capability:` field is a hint only. Determine with the user:
-- Is this really about the tagged capability?
-- Is it about a different capability?
+- Does this relate to an existing K skill? Check `~/Documents/Knowledge/Skills/INDEX.md`
+- Is this really about the tagged capability/research?
+- Is it a recurring pain that should become a NEW K skill?
 - Is it a personal pattern (user's decision-making, not a guideline gap)?
 - Is it noise (too project-specific to generalize)?
 
 **c. Propose routing** — one of:
+- **K skill improvement** → invoke `/skill {name}` to improve the existing skill with this observation's insights. Summarize what should change. Ask user to approve.
+- **New K skill** → if the observation reveals a recurring pain with no existing skill, propose creating one via `/skill {name}`. Ask user to approve.
 - **Capability patch** → summarize what should change in the capability guideline. Identify which file in the Researches/ folder should be updated and what the patch should say. Ask user to approve or edit. If approved, apply the patch.
 - **Personal pattern** → note it for `~/Documents/Knowledge/People/056-denis-tomilin/collaboration_patterns.md` or `ai_corrections.md`. Ask user to confirm.
 - **Discard** → too specific, one-off, not reusable. Explain why.
@@ -85,9 +88,10 @@ npx @tobilu/qmd embed
 
 ```
 Triaged N item(s):
-- I0042 [observation]: Deploy requires environmentId → capability patch applied to R036
-- I0043 [idea]: AI feedback loops → triaged, project: [[Knowledge]]
-- I0044 [task]: MCP security doc → triaged, entity created: [[Sergei]]
+- I0042 [observation]: Deploy requires environmentId → K skill "deployment" improved
+- I0043 [observation]: Diagram colors inconsistent → new K skill "diagram-generation" created
+- I0044 [idea]: AI feedback loops → triaged, project: [[Knowledge]]
+- I0045 [task]: MCP security doc → triaged, entity created: [[Sergei]]
 ```
 
 ## Constraints
