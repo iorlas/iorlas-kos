@@ -15,6 +15,11 @@ claude plugin install iorlas-kay@iorlas-marketplace
 /init
 ```
 
+```bash
+# 4. Enable global agent lifecycle (ACC, signal emission)
+echo 'Read `~/Documents/Knowledge/global-claude.md` at the start of every session.' > ~/.claude/CLAUDE.md
+```
+
 That's it. Init will:
 - Check dependencies (Node.js, Python, QMD, jq, git)
 - Create your Knowledge folder with ontology-driven structure
@@ -45,7 +50,7 @@ claude
 |---------|-------------|
 | `/init` | Set up from scratch or health-check an existing install |
 | `/inbox` | Capture thoughts, tasks, links, voice dumps — from any directory |
-| `/reflect` | Record what broke or what you learned during a session |
+| `/reflect` | Emit evolution signal — record friction, needs, decisions to `Evolution/signals/` |
 | `/triage` | Process inbox items: resolve mentions, link entities, route observations |
 | `/consolidate` | Find scattered entities that belong together and merge them |
 
