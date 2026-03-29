@@ -1,110 +1,117 @@
 ---
 name: reflect
-description: "Captures an observation about what broke, was missing, or emerged during a session. Writes to Kay (K) Inbox with optional capability hints. Use when completing a task, hitting friction, or when the user says 'reflect', 'observe', or 'capture lesson'."
+description: "Emit an evolution signal — record what happened, what broke, what's needed. Writes OCEL-formatted signals to Evolution/signals/. Use mid-task on friction, at task completion, or when the user says 'reflect'."
 ---
 
-# Reflect — Capture an Observation
+# Reflect — Emit Evolution Signal
 
-You capture what went wrong, what was missing, or what insight emerged during the current session. Observations land in the Kay Inbox for later triage into capability patches or personal patterns.
+Record what happened. Write a signal file to `~/Documents/Knowledge/Evolution/signals/`. Done.
 
-**This is NOT a retrospective or interactive session.** Derive the observation, write the file, confirm. Done.
+**This is a write operation, not a discussion.** Derive the signal, write the file, confirm. No interactive session unless explicitly asked.
 
 Input: $ARGUMENTS
 
-## Step 1: Derive the Observation
+## Step 1: Derive the Signal
 
-If `$ARGUMENTS` contains text, use it as the raw observation content (voice dump or typed note). Clean it up but preserve the meaning.
+Determine the signal type and content from one of these sources:
 
-If `$ARGUMENTS` is empty, derive from session context by reviewing:
-- What capability guidelines were consumed? (deployment platform docs, MCP patterns, etc.)
-- What broke, was missing, or required a workaround?
-- What insight emerged that wasn't in the guidelines?
-- What personal pattern or decision is worth noting?
+**If `$ARGUMENTS` contains text:** Use it as raw content. Clean up but preserve meaning. Infer the signal type from content.
 
-Synthesize into a specific, actionable observation. Avoid vague statements like "deployment was hard." Instead: "The deployment guideline doesn't mention that `compose.create` requires `environmentId` from the `project.create` response."
+**If `$ARGUMENTS` is empty:** Derive from session context:
+- What friction was encountered? What broke or was missing?
+- What skills were used? What skills should have existed but didn't?
+- What decisions were made? What needs emerged?
+- What worked well that should be preserved?
 
-**Nothing worth capturing is a valid outcome.** If the session went smoothly — no friction, no missing guidelines, no surprises — say so and stop. Do not force an observation out of a clean session. Minor speed bumps that were resolved in minutes (wrong CLI flag, typo, quick lookup) are not observations. An observation should imply a capability patch or pattern worth recording. If you can't imagine what that patch would be, there's nothing to capture.
+**Signal types** — pick one:
+- `problem` — something broke, was unclear, or caused friction
+- `need` — "I wish X existed", desire for a skill/capability that doesn't exist
+- `usage` — skill was invoked (even if it worked fine)
+- `limitation` — skill exists but doesn't cover this use case
+- `decision` — a final decision was made, with rationale
+- `resolution` — a problem was solved, with method
 
+**Nothing worth capturing is valid.** If the session went smoothly — no friction, no missing skills, no surprises — say so and stop. Do not force a signal. Minor speed bumps resolved in seconds are not signals.
+
+If nothing to capture, stop here.
+
+## Step 2: Gather Context Automatically
+
+Collect these from the current session — do not ask the user:
+
+```bash
+# Current working directory
+pwd
+
+# Project name (from git or directory)
+basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 ```
-No observations from this session — the work went smoothly.
-```
 
-If nothing to capture, stop here. Do not proceed to Step 2.
+**Skills in context:** List ALL skills that were loaded or invoked during this session. For each, note whether it was actually invoked (`true`) or just available (`false`). Check the system-reminder at conversation start for the skills list.
 
-## Step 2: Identify Capability Hints
+**Session ID:** Use the first 8 characters of a hash of the current timestamp + cwd, or any unique session identifier available.
 
-Scan the session for references to capability guidelines or research IDs (e.g., R036 for deployment platform, R020 for MCP patterns). These are hints — best guesses, not authoritative. Leave empty if unclear.
+**Target skill:** If this signal is about a specific existing skill, name it. If it's about a new activity with no skill → leave empty.
 
-Check `~/Documents/Knowledge/Researches/` folder names for matching IDs if unsure.
+## Step 3: Write the Signal File
 
-The `capability` field is a free-form string array. Any descriptive string is fine: `["R036"]`, `["deployment platform"]`, `["proxy hub", "docker networking"]`. Empty array `[]` is also fine.
+**Naming:** `{YYYY-MM-DD}-{HHmm}-{slug}.yaml`
 
-## Step 3: Determine Project Context
+**Location:** `~/Documents/Knowledge/Evolution/signals/`
 
-Same logic as `/inbox`:
+Create the directory if it doesn't exist: `mkdir -p ~/Documents/Knowledge/Evolution/signals`
 
-Run: `basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"`
-
-- `context:` — full cwd path
-- `project:` — `"[[{result}]]"` as wiki-link
-
-## Step 4: Write the Observation File
-
-**ID sequence:** scan `~/Documents/Knowledge/Inbox/I????-*.md`, find highest ID, increment. Same sequence as all inbox items.
-
-Create `~/Documents/Knowledge/Inbox/I{NNNN}-{slug}.md`:
-
-```markdown
+```yaml
 ---
-kind: inbox
-subtype: observation
-id: I{NNNN}
-name: "{Brief title — what was observed}"
-status: new
-created: {YYYY-MM-DDTHH:MM}
-context: {full cwd path}
-project: "[[{project name}]]"
-capability: [{capability hints}]
-source: {agent|human}
+type: signal
+subtype: {problem|need|usage|limitation|decision|resolution}
+timestamp: {ISO 8601}
+session_id: {unique session identifier}
+
+context:
+  cwd: {full cwd path}
+  project: {project name}
+  skills_in_context:
+    - name: {skill name}
+      invoked: {true|false}
+    # ... all skills loaded this session
+
+target_skill: {skill name, or omit if no skill applies}
+
+expected: "{what was supposed to happen — omit if not applicable}"
+actual: "{what actually happened — omit if not applicable}"
 ---
 
-# {Brief title — what was observed}
-
-## What happened
-
-{Concrete description: what broke, what was missing, what the agent had to work around,
-or what insight emerged. Be specific — vague observations are useless at triage.}
-
-## Impact
-
-{Why this matters. Omit section if obvious from what-happened.}
+{Free-text narrative. Be specific and concrete. Include what was tried,
+why it failed, what workaround was used, what the agent wished existed.
+Rich context here helps the evolution engine make better skill changes.}
 ```
 
-**Source field:** set to `agent` if the observation was derived from session context (no $ARGUMENTS), `human` if the user provided the content.
+**Field rules:**
+- `expected`/`actual` — required for `problem` and `limitation` signals. Optional for others.
+- `target_skill` — omit entirely when no existing skill is relevant (e.g., "wrote a poem for the first time").
+- `skills_in_context` — always populated. Even "no skills were loaded" is useful information.
+- `context.cwd` and `context.project` — always populated.
 
-**No confirmation needed before writing.** Write immediately, then report.
+## Step 4: Commit
 
-## Step 5: Confirm and Offer
+```bash
+cd ~/Documents/Knowledge && git add Evolution/signals/ && git commit -m "signal: {slug}"
+```
+
+## Step 5: Confirm
 
 ```
-Observation captured: I{NNNN} — {title}
-Capability hint: {R036} (or "none identified")
-
-Want to dig into this now, or leave it for triage?
+Signal emitted: {filename}
+Type: {subtype} | Target: {skill or "none"} | Project: {project}
 ```
 
-If user says "now" — discuss and analyze in the current session.
-If user says "triage" or doesn't respond — done.
-
-## What Makes a Good Observation
-
-- **Specific:** "The guideline doesn't mention that `compose.create` requires `environmentId` from the `project.create` response" is good. "Dokploy was hard" is not.
-- **Actionable:** A good observation implies a capability patch. If you can't imagine what the patch would be, the observation is too vague.
-- **Honest about uncertainty:** If you don't know the root cause, say so. Don't invent one.
+One line. Done.
 
 ## Constraints
 
-- **No git operations.** No add, commit, push.
-- **No dedup.** Always create a new file, even if a similar observation exists.
-- **No interactive session** unless the user explicitly asks to "dig in."
-- **Capability hints are optional.** Empty array is fine. Don't force a match.
+- **No Inbox writes.** Signals go to `Evolution/signals/`, never to `Inbox/`.
+- **No dedup.** Always create a new signal file.
+- **No interactive session** unless the user explicitly asks to discuss.
+- **Lightweight.** This should take <30 seconds including the commit.
+- **Auto-create directory.** If `Evolution/signals/` doesn't exist, create it.
